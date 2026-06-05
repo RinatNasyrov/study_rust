@@ -7,4 +7,8 @@ edition = "2024"
 name = "3_5"
 path = "/home/rinat/MyProjects/study_rust/docs_examples/3_5/main.rs"
 
+[[bin]]
+name = "HelloWorld"
+path = "/home/rinat/MyProjects/study_rust/docs_examples/HelloWorld/main.rs"
+
 [dependencies]

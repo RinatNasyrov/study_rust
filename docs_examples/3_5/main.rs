@@ -5,25 +5,19 @@ use std::io;
 // 3. Распечатайте текст рождественской песни "Двенадцать дней Рождества", воспользовавшись повторами в песне.
 
 fn main() {
-    // На неиспользуемое выдает варнинги
-    // convert_fr_to_c();
-    // calc_fib_input();
+    convert_fr_to_c();
+    calc_fib_input();
     xmas_carol();
 }
 
 fn convert_fr_to_c() {
     println!("Введите температуру в Фаренгейтах: ");
-    
-    let mut farenheit = String::new();
-    
-    io::stdin()
-        .read_line(&mut farenheit)
-        .expect("bad input");
 
-    let farenheit: f64 = farenheit
-        .trim()
-        .parse()
-        .expect("bullshit input");
+    let mut farenheit = String::new();
+
+    io::stdin().read_line(&mut farenheit).expect("bad input");
+
+    let farenheit: f64 = farenheit.trim().parse().expect("bullshit input");
 
     let celsius = (farenheit - 32.0) * 5.0 / 9.0;
 
@@ -32,19 +26,14 @@ fn convert_fr_to_c() {
 
 fn calc_fib_input() {
     println!("Введите номер числа: ");
-    
+
     let mut num = String::new();
-    
-    io::stdin()
-        .read_line(&mut num)
-        .expect("bad input");
 
-    let num: u32 = num
-        .trim()
-        .parse()
-        .expect("bullshit input");
+    io::stdin().read_line(&mut num).expect("bad input");
 
-    let fib_num = calc_fib(num);    
+    let num: u32 = num.trim().parse().expect("bullshit input");
+
+    let fib_num = calc_fib(num);
     println!("Число Фибоначчи: {fib_num}");
 }
 
@@ -61,7 +50,7 @@ fn count_suffix(number: usize) -> String {
         1 => "st".to_string(),
         2 => "nd".to_string(),
         3 => "rd".to_string(),
-        other => "th".to_string(),
+        _ => "th".to_string(),
     }
 }
 
@@ -84,25 +73,27 @@ fn xmas_carol() {
     let mut day_counter: usize = 0;
 
     while day_counter < LEN {
-        println!("On the {}{} day of Christmas,", day_counter + 1, count_suffix(day_counter + 1));
+        println!(
+            "On the {}{} day of Christmas,",
+            day_counter + 1,
+            count_suffix(day_counter + 1)
+        );
         println!("my true love sent to me");
-        
+
         for gift_counter in (0..day_counter + 1).rev() {
             if gift_counter == 0 {
                 if day_counter == 0 {
                     println!("A {}", gifts[gift_counter]);
-                }
-                else {
+                } else {
                     println!("And a {}", gifts[gift_counter]);
                 }
-            }
-            else {
+            } else {
                 println!("{} {}", gift_counter + 1, gifts[gift_counter]);
             }
-        } 
+        }
 
         println!("");
 
         day_counter += 1;
-    } 
+    }
 }
