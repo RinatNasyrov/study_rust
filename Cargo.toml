@@ -1,0 +1,10 @@
+[package]
+name = "study_rust"
+version = "0.1.0"
+edition = "2024"
+
+[[bin]]
+name = "3_5"
+path = "/home/rinat/MyProjects/study_rust/docs_examples/3_5/main.rs"
+
+[dependencies]
