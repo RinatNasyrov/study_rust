@@ -8,6 +8,10 @@ name = "3_5"
 path = "/home/rinat/MyProjects/study_rust/docs_examples/3_5/main.rs"
 
 [[bin]]
+name = "8_3"
+path = "/home/rinat/MyProjects/study_rust/docs_examples/8_3/main.rs"
+
+[[bin]]
 name = "HelloWorld"
 path = "/home/rinat/MyProjects/study_rust/docs_examples/HelloWorld/main.rs"
 
