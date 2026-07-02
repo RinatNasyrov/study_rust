@@ -17,10 +17,45 @@ use std::collections::HashMap;
 
 fn main() {
     first_task();
+    second_task();
+}
+
+fn second_task() {
+    // 2. Работаем со строкой
+    let text = "An big elephant can eat ten apples daily";
+    println!("Исходная фраза {text}");
+
+    let mut res = String::new();
+    let vowels = ['a', 'e', 'i', 'o', 'u', 'y'];
+
+    for word in text.split_whitespace() {
+        if word.len() == 1 {
+            continue;
+        }
+
+        // Разное поведение в зависимости от гласности
+        if vowels.iter().any(|x| word.to_lowercase().starts_with(*x)) {
+            // Разложим слово на символы
+            let mut chars_vec: Vec<_> = word.chars().collect();
+            // Достанем первый символ из начала в суффикс в конце
+            let char: char = chars_vec.remove(0);
+
+            let trimmed_word: String = chars_vec.into_iter().collect();
+            res.push_str(&trimmed_word);
+            res.push('-');
+            res.push(char);
+            res.push_str("ay ");
+        } else {
+            res.push_str(word);
+            res.push_str("-hay ");
+        }
+    }
+
+    println!("Измененная фраза {res}");
 }
 
 fn first_task() {
-    // 1. работаем с вектором целых чисел
+    // 1. Работаем с вектором целых чисел
     let mut nums: Vec<u8> = Vec::new();
     const COUNT: u8 = 11;
     let mut i: u8 = 0;
