@@ -16,3 +16,4 @@ name = "HelloWorld"
 path = "/home/rinat/MyProjects/study_rust/docs_examples/HelloWorld/main.rs"
 
 [dependencies]
+rand = "0.10.1"

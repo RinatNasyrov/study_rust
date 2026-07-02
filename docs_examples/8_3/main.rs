@@ -12,7 +12,105 @@
  * или "Add Amir to Sales". Затем позвольте пользователю получить список всех людей из отдела
  * или всех людей в компании, отсортированных по отделам в алфавитном порядке.
  */
+use rand::prelude::*;
+use std::collections::HashMap;
 
 fn main() {
-    println!("test");
+    first_task();
+}
+
+fn first_task() {
+    // 1. работаем с вектором целых чисел
+    let mut nums: Vec<u8> = Vec::new();
+    const COUNT: u8 = 11;
+    let mut i: u8 = 0;
+    while i < COUNT {
+        i += 1;
+        let value: u8 = rand::rng().random_range(1..=10);
+        nums.push(value);
+    }
+
+    println!("Исходный вектор");
+    // Похоже просто передать дважды вектор нельзя
+    // линтер указывает на то, что nums уже был перемещен,
+    // что круто тк передавать копию очевидно безопаснее
+    print_vec(&nums);
+    let avg = calc_vec_avg(&nums);
+
+    println!("\nСреднее {avg}");
+    sort_vec(&mut nums);
+
+    println!("Сортируем");
+    print_vec(&nums);
+
+    let median = find_median(&nums);
+    println!("\nМедиана {median}");
+
+    let moda = find_moda(&nums);
+    println!("Мода {moda}");
+}
+
+fn print_vec(v: &Vec<u8>) {
+    for i in v {
+        print!("{i} ");
+    }
+}
+
+fn calc_vec_avg(v: &Vec<u8>) -> usize {
+    let mut sum: u8 = 0;
+    for i in v {
+        sum += i;
+    }
+    sum as usize / v.len()
+}
+
+fn sort_vec(v: &mut Vec<u8>) {
+    // Пузырек
+    let mut buff: u8;
+    // Проигнорирую авто-разадресацию для себя для наглядности
+    for i in 0..(*v).len() {
+        let swapped = false;
+        for j in 0..(*v).len() - i - 1 {
+            if v[j] > v[j + 1] {
+                buff = v[j];
+                v[j] = v[j + 1];
+                v[j + 1] = buff;
+            }
+        }
+        if swapped {
+            break;
+        }
+    }
+}
+
+fn find_median(v: &Vec<u8>) -> f32 {
+    // Добавил доп условие для решения ситуаций с
+    // нечетным колвом элементов тк такое было когда то в унике
+    let n: usize = v.len();
+    let mut res: f32;
+    if n % 2 == 0 {
+        res = v[n / 2] as f32;
+    } else {
+        res = (v[n / 2] + v[n / 2 - 1]) as f32;
+        res = res / 2.0;
+    }
+    res
+}
+
+fn find_moda(v: &Vec<u8>) -> i8 {
+    let mut map = HashMap::new();
+    let mut frequently_seen: i8 = -1;
+    let mut max_count = 0;
+
+    for i in v {
+        let count = map.entry(i).or_insert(0);
+        *count += 1;
+
+        if *count > max_count {
+            max_count = *count;
+            frequently_seen = *i as i8;
+        }
+    }
+
+    frequently_seen
 }
