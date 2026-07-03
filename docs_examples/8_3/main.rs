@@ -14,10 +14,82 @@
  */
 use rand::prelude::*;
 use std::collections::HashMap;
+use std::io;
 
 fn main() {
     first_task();
     second_task();
+
+    let exit = false;
+    while !exit {
+        println!("Введите команду: ");
+        // Если вынести эту строку с объявлением input,
+        // то выводиться сам input на печать будет как
+        // надо - каждый раз новый, но при разделении по
+        // пробелам - слова будут собираться друг за другом
+        // с разных итерацй => нужно разобраться почему так
+        let mut input = String::new();
+        io::stdin().read_line(&mut input).expect("bad input");
+        // Разделим инпут на слова, получим итератор,
+        // из итератора получим вектор, как во 2й задаче
+        let input_vec = input.split_whitespace().into_iter().collect();
+        process_words(&input_vec);
+    }
+}
+
+enum ParseInutStates {
+    Add,
+    Name,
+    To,
+    Departmen,
+    End,
+}
+
+fn process_words(v: &Vec<&str>) -> bool {
+    let mut res = true;
+    let mut state = ParseInutStates::Add;
+    let mut name = String::from("");
+    let mut department = String::from("");
+
+    // Простой конечный автомат
+    for word in v {
+        match state {
+            ParseInutStates::Add => {
+                if word.to_lowercase() != "add" {
+                    res = false;
+                    break;
+                }
+                state = ParseInutStates::Name;
+            }
+            ParseInutStates::Name => {
+                name = String::from(*word);
+                state = ParseInutStates::To;
+            }
+            ParseInutStates::To => {
+                if word.to_lowercase() != "to" {
+                    res = false;
+                    break;
+                }
+                state = ParseInutStates::Departmen;
+            }
+            ParseInutStates::Departmen => {
+                department = String::from(*word);
+                state = ParseInutStates::End;
+            }
+            ParseInutStates::End => {
+                res = false;
+                break;
+            }
+        }
+    }
+
+    if res {
+        println!("{name} {department}");
+    } else {
+        println!("Неверный формат");
+    }
+
+    res
 }
 
 fn second_task() {
