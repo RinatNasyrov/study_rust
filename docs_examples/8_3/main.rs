@@ -20,17 +20,43 @@ fn main() {
     first_task();
     second_task();
 
-    let exit = false;
     let mut input = String::new();
-    while !exit {
+    let mut map = HashMap::<String, String>::new();
+    loop {
+        // Прочитаем очередной ввод
         println!("Введите команду: ");
         input.clear();
         io::stdin().read_line(&mut input).expect("bad input");
-        // Разделим инпут на слова, получим итератор,
-        // из итератора получим вектор, как во 2й задаче
-        let input_vec = input.split_whitespace().into_iter().collect();
-        process_words(&input_vec);
+
+        match input.as_str().trim() {
+            // Выход
+            "exit" => break,
+            // Вывод сотрудников по подразделению
+            "printDep" => {
+                println!("Введите название подразделения:");
+                input.clear();
+                io::stdin().read_line(&mut input).expect("bad input");
+                for (name, dep) in &map {
+                    if *dep != input.as_str().trim() {
+                        continue;
+                    }
+                    println!("Сотрудник {name} работает в {dep}");
+                }
+            }
+            // Вывод всех сотрудников
+            "printAll" => {
+                for (name, dep) in &map {
+                    println!("Сотрудник {name} работает в {dep}");
+                }
+            }
+            // Иначе это добавление, его анализируем отдельно
+            _ => {
+                let input_vec = input.split_whitespace().into_iter().collect();
+                process_words(&input_vec, &mut map);
+            }
+        }
     }
+    println!("Конец")
 }
 
 enum ParseInutStates {
@@ -41,7 +67,7 @@ enum ParseInutStates {
     End,
 }
 
-fn process_words(v: &Vec<&str>) -> bool {
+fn process_words(v: &Vec<&str>, map: &mut HashMap<String, String>) -> bool {
     let mut res = true;
     let mut state = ParseInutStates::Add;
     let mut name = String::from("");
@@ -80,7 +106,7 @@ fn process_words(v: &Vec<&str>) -> bool {
     }
 
     if res {
-        println!("{name} {department}");
+        map.insert(name, department);
     } else {
         println!("Неверный формат");
     }
