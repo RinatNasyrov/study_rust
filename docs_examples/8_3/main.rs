@@ -19,9 +19,12 @@ use std::io;
 fn main() {
     first_task();
     second_task();
+    third_task();
+}
 
+fn third_task() {
     let mut input = String::new();
-    let mut map = HashMap::<String, String>::new();
+    let mut map = HashMap::<String, Vec<String>>::new();
     loop {
         // Прочитаем очередной ввод
         println!("Введите команду: ");
@@ -36,18 +39,21 @@ fn main() {
                 println!("Введите название подразделения:");
                 input.clear();
                 io::stdin().read_line(&mut input).expect("bad input");
-                for (name, dep) in &map {
-                    if *dep != input.as_str().trim() {
-                        continue;
-                    }
-                    println!("Сотрудник {name} работает в {dep}");
+                // Снова обязательно избавляем строку от мусора,
+                // иначе совпадений не найдет
+                input = input.as_str().trim().to_string();
+                // Достанем значения по ключу
+                match map.get(&input) {
+                    Some(names) => println!("{names:?}"),
+                    None => println!("Нет такого отдела"),
                 }
             }
             // Вывод всех сотрудников
             "printAll" => {
-                for (name, dep) in &map {
-                    println!("Сотрудник {name} работает в {dep}");
-                }
+                // Сортировка по ключам (отделам) и похоже даже работает
+                let mut v: Vec<_> = map.clone().into_iter().collect();
+                v.sort_by(|x, y| x.0.cmp(&y.0));
+                println!("{v:?}");
             }
             // Иначе это добавление, его анализируем отдельно
             _ => {
@@ -67,7 +73,7 @@ enum ParseInutStates {
     End,
 }
 
-fn process_words(v: &Vec<&str>, map: &mut HashMap<String, String>) -> bool {
+fn process_words(v: &Vec<&str>, map: &mut HashMap<String, Vec<String>>) -> bool {
     let mut res = true;
     let mut state = ParseInutStates::Add;
     let mut name = String::from("");
@@ -106,7 +112,7 @@ fn process_words(v: &Vec<&str>, map: &mut HashMap<String, String>) -> bool {
     }
 
     if res {
-        map.insert(name, department);
+        map.entry(department).or_insert(Vec::new()).push(name);
     } else {
         println!("Неверный формат");
     }
