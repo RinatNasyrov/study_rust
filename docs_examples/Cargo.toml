@@ -1,0 +1,19 @@
+[package]
+name = "docs_examples"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+rand = "0.10.1"
+
+[[bin]]
+name = "TaskFrom3_5"
+path = "bin/3_5.rs"
+
+[[bin]]
+name = "TaskFrom8_3"
+path = "bin/8_3.rs"
+
+[[bin]]
+name = "HelloWorld"
+path = "bin/HelloWorld.rs"
