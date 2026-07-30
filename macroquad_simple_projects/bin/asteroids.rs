@@ -76,15 +76,19 @@ impl State {
             game.draw(self.best_time)
         } else {
             // иначе, рисуем меню.
-            Self::draw_menu()
+            Self::draw_menu(self.best_time)
         }
     }
 
     /// Отображение меню
-    fn draw_menu() {
-        let font_size = 40.0;
-        let text = "Press Enter to start game.";
+    fn draw_menu(best_time: f64) {
+        Self::draw_text(
+            &format!("Press Enter to start game.\nBest time: {:.2}", best_time),
+            40.0,
+        );
+    }
 
+    fn draw_text(text: &str, font_size: f32) {
         // Вычисляем, какой размер занимает текст на экране.
         let text_size = measure_text(text, None, font_size as _, 1.0);
 
