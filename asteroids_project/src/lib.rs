@@ -1,31 +1,8 @@
 use macroquad::prelude::*;
 use macroquad::rand::RandomRange;
 
-// Точка входа в приложение. Макрос позволяет сделать функцию main асинхронной,
-// а также иницилизирует окно.
-#[macroquad::main("Asteroids")]
-async fn main() {
-    // Инициализирум состояние наший игры по умолчанию.
-    let mut state = State::default();
-
-    // Запускаем игровой цикл.
-    loop {
-        // Очищаем фон тёмно-серым цветом.
-        clear_background(DARKGRAY);
-
-        // Обновляем состояние игры.
-        state.update();
-
-        // Отображаем игру в окне.
-        state.draw();
-
-        // Ожидаем возможности заняться следующим кадром.
-        next_frame().await;
-    }
-}
-
 /// Состояние приложения.
-struct State {
+pub struct State {
     /// Рекорное время.
     best_time: f64,
     /// Состояние игрового процесса.
