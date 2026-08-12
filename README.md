@@ -6,8 +6,8 @@
 
 ## Запуск
 cargo build - сбилдить все
-cargo run -p space_name --bin bin_name - Запуск мейна из бинарника с именем из Cargo.toml
-cargo run -p space_name - Запуск без имени бинарника, если в проекте один мейн
+cargo run -p space_name --bin bin_name - Запуск мейна из бинарника с именем из Cargo.toml\
+cargo run -p space_name - Запуск без имени бинарника, если в проекте один мейн\
 *Пример команды: cargo run -p docs_examples --bin HelloWorld*
 
 ## Новый проект
