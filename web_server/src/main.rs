@@ -16,14 +16,15 @@ fn main() {
 
 fn handle_connection(mut stream: TcpStream) {
     let buf_reader = BufReader::new(&stream);
-    let _http_request: Vec<_> = buf_reader
-        .lines()
-        .map(|result| result.unwrap())
-        .take_while(|line| !line.is_empty())
-        .collect();
+    let request_line = buf_reader.lines().next().unwrap().unwrap();
 
-    let status_line = "HTTP/1.1 200 OK\r\n\r\n";
-    let contents = fs::read_to_string("web_server/hello.html").unwrap();
+    let (status_line, filename) = if request_line == "GET / HTTP/1.1" {
+        ("HTTP/1.1 200 OK", "web_server/hello.html")
+    } else {
+        ("HTTP/1.1 404 NOT FOUND", "web_server/404.html")
+    };
+
+    let contents = fs::read_to_string(filename).unwrap();
     // Хз почему при указании "Content-Length: {length}" после status_line
     // браузер выводил ответ текстом, а не рендерил страницу
     // let length = contents.len();
