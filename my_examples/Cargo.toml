@@ -1,0 +1,11 @@
+[package]
+name = "my_examples"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+rand = "0.10.1"
+
+[[bin]]
+name = "lifetime_test_1"
+path = "bin/lifetime_test_1.rs"

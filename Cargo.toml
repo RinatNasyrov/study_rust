@@ -1,3 +1,7 @@
 [workspace]
 resolver = "3"
-members = ["docs_examples", "asteroids_project", "web_server",]
+members = [
+    "docs_examples",
+    "asteroids_project", "my_examples",
+    # "web_server",
+]
