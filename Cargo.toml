@@ -2,6 +2,6 @@
 resolver = "3"
 members = [
     "docs_examples",
-    "asteroids_project", "my_examples",
+    "asteroids_project", "my_examples", "my-game",
     # "web_server",
 ]

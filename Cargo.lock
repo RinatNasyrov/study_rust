@@ -249,6 +249,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "my-game"
+version = "0.1.0"
+dependencies = [
+ "macroquad",
+]
+
+[[package]]
 name = "my_examples"
 version = "0.1.0"
 dependencies = [
