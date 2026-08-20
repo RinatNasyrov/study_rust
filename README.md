@@ -2,7 +2,8 @@
 
 ## Пространства
 - docs_examples - решения задачек из документации
-- macroquad_simple_projects - простенькие проекты на игро-движке macroquad
+- asteroids_project - пример простой игры на macroquad, на нем разбтрался как вынести код в отдельные .rs файлы
+- my-game - разбираюсь с macroquad документацией
 
 ## Запуск
 cargo build - сбилдить все
