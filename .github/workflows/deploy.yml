@@ -30,7 +30,7 @@ jobs:
           mkdir -p ./deploy
           cp ./target/wasm32-unknown-unknown/release/my-game.wasm ./deploy/
           cp index.html ./deploy/
-          curl https://raw.githubusercontent.com/not-fl3/macroquad/refs/heads/master/js/mq_js_bundle.js > mq_js_bundle.js
+          curl -sL https://raw.githubusercontent.com/not-fl3/macroquad/refs/heads/master/js/mq_js_bundle.js -o ./deploy/mq_js_bundle.js
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
