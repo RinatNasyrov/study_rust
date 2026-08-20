@@ -5,6 +5,7 @@ pub struct Shape {
     pub speed: f32,
     pub x: f32,
     pub y: f32,
+    pub collided: bool,
 }
 
 impl Shape {
